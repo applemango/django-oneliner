@@ -1,25 +1,23 @@
 [
-    [
-        i:=__import__,
-        os:=i("os"),
-        sys:=i("sys"),
-        pymysql:=i("pymysql"),
-        django:=i("django"),
-        get_wsgi_application:=i("django.core.wsgi")
-    ],
-    urlpatterns := [
-        django.urls.path("", lambda request: django.http.JsonResponse({"msg": "Hello, world!"}))
-    ],
-    pymysql.install_as_MySQLdb(),
-    django.conf.settings.configure(
-        DEBUG=(
-            os.environ.get("DEBUG","")=="1"
-        ),
-        ALLOWED_HOSTS=["*"],
+    us := lambda u, j: [u("", lambda r: j({"msg": "Hello, world!"}))],
+    i:=__import__,
+    o:=i("os"),
+    s:=i("sys"),
+    p:=i("pymysql"),
+    d:=i("django"),
+    i("django.core.wsgi"),
+    u:= d.urls.path,
+    j:=d.http.JsonResponse,
+    urlpatterns := us(u, j),
+    p.install_as_MySQLdb(),
+    d.conf.settings.configure(
+        DEBUG=True,ALLOWED_HOSTS=["*"],
         ROOT_URLCONF=__name__,
-        SECRET_KEY=django.utils.crypto.get_random_string(50),
-        MIDDLEWARE=["django.middleware.common.CommonMiddleware"]
+        SECRET_KEY=d.utils.crypto.get_random_string(50),
+        MIDDLEWARE=[
+            "django.middleware.common.CommonMiddleware"
+        ]
     ),
-    app:=django.core.wsgi.get_wsgi_application(),
-    django.core.management.execute_from_command_line(sys.argv)
+    app:=d.core.wsgi.get_wsgi_application(),
+    d.core.management.execute_from_command_line(s.argv)
 ]
